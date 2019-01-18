@@ -3,17 +3,17 @@ Transform: AWS::Serverless-2016-10-31
 
 Metadata:
   AWS::ServerlessRepo::Application:
-    Name: json-lambda-logs-to-kinesis-firehose
+    Name: json-logs-to-kinesis-firehose
     Description: This serverless application forwards JSON-formatted log events for a given CloudWatch Log Group to a Kinesis Data Firehose Delivery Stream
     Author: James Hood
     SpdxLicenseId: MIT
     # paths are relative to .aws-sam/build directory
     LicenseUrl: ../../LICENSE
     ReadmeUrl: ../../README.md
-    Labels: [lambda, logs, json, kinesis-firehose]
+    Labels: [logs, json, kinesis-firehose]
     HomePageUrl: https://github.com/jlhood/json-lambda-logs-to-kinesis-firehose
-    SemanticVersion: 0.0.4
-    SourceCodeUrl: https://github.com/jlhood/json-lambda-logs-to-kinesis-firehose/tree/0.0.4
+    SemanticVersion: 1.0.0
+    SourceCodeUrl: https://github.com/jlhood/json-lambda-logs-to-kinesis-firehose/tree/1.0.0
 
 Parameters:
   LogGroupName:
