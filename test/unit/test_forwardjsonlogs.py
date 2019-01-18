@@ -1,5 +1,6 @@
 import pytest
 import base64
+import json
 import gzip
 
 import test_constants
@@ -18,7 +19,7 @@ def test_handler_valid_json(mock_firehose):
     mock_firehose.put_record.assert_called_with(
         DeliveryStreamName=test_constants.DELIVERY_STREAM_NAME,
         Record={
-            'Data': bytes(log_message + '\n', 'utf-8')
+            'Data': log_message + '\n'
         }
     )
 
@@ -29,7 +30,7 @@ def test_handler_valid_json_with_trailing_newline(mock_firehose):
     mock_firehose.put_record.assert_called_with(
         DeliveryStreamName=test_constants.DELIVERY_STREAM_NAME,
         Record={
-            'Data': bytes(log_message, 'utf-8')
+            'Data': log_message
         }
     )
 
@@ -40,7 +41,14 @@ def test_handler_invalid_json(mock_firehose):
 
 
 def _mock_log_event(log_message):
-    data = base64.b64encode(gzip.compress(bytes(log_message, 'utf-8')))
+    data_payload = {
+        'logEvents': [
+            {
+                'message': log_message
+            }
+        ]
+    }
+    data = base64.b64encode(gzip.compress(bytes(json.dumps(data_payload), 'utf-8')))
     return {
         'awslogs': {
             'data': data

@@ -12,8 +12,8 @@ Metadata:
     ReadmeUrl: ../../README.md
     Labels: [lambda, logs, json, kinesis-firehose]
     HomePageUrl: https://github.com/jlhood/json-lambda-logs-to-kinesis-firehose
-    SemanticVersion: 0.0.3
-    SourceCodeUrl: https://github.com/jlhood/json-lambda-logs-to-kinesis-firehose/tree/0.0.3
+    SemanticVersion: 0.0.4
+    SourceCodeUrl: https://github.com/jlhood/json-lambda-logs-to-kinesis-firehose/tree/0.0.4
 
 Parameters:
   LogGroupName:

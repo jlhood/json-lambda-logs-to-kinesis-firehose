@@ -20,25 +20,30 @@ def handler(event, context):
     """Forward JSON-formatted CW Log events to Firehose Delivery Stream."""
     LOG.debug('Received event: %s', event)
 
-    log_message = _get_log_message(event)
-    LOG.debug('Attempting to deserialize log message as JSON: %s', log_message)
+    log_messages = _get_log_messages(event)
+    for log_message in log_messages:
+        if _is_json(log_message):
+            if not log_message.endswith('\n'):
+                log_message += '\n'
+
+            FIREHOSE.put_record(
+                DeliveryStreamName=config.DELIVERY_STREAM_NAME,
+                Record={
+                    'Data': log_message
+                }
+            )
+
+
+def _get_log_messages(event):
+    data = json.loads(gzip.decompress(base64.b64decode(event['awslogs']['data'])))
+    return [log_event['message'] for log_event in data['logEvents']]
+
+
+def _is_json(s):
     try:
-        json.loads(log_message)
+        LOG.debug('Attempting to deserialize as JSON: %s', s)
+        json.loads(s)
+        return True
     except json.decoder.JSONDecodeError:
-        LOG.debug('Log message is not valid JSON. Ignore.')
-        return
-
-    if not log_message.endswith(b'\n'):
-        log_message += b'\n'
-
-    FIREHOSE.put_record(
-        DeliveryStreamName=config.DELIVERY_STREAM_NAME,
-        Record={
-            'Data': log_message
-        }
-    )
-
-
-def _get_log_message(event):
-    data = event['awslogs']['data']
-    return gzip.decompress(base64.b64decode(data))
+        LOG.debug('String is not JSON')
+        return False
