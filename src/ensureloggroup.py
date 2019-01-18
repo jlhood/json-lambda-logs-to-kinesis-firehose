@@ -51,7 +51,9 @@ def _ensure_log_group_exists(log_group_name):
             logGroupName=log_group_name
         )
         LOG.info("Log group created: %s", log_group_name)
-    except botocore.errorfactory.ResourceAlreadyExistsException:
+    except botocore.exceptions.ClientError as e:
+        if e.response.get('Error', {}).get('Code') != 'ResourceAlreadyExistsException':
+            raise
         LOG.debug("Log group already exists: %s", log_group_name)
 
 
