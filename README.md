@@ -1,4 +1,4 @@
-# json-lambda-logs-to-kinesis-firehose
+# json-logs-to-kinesis-firehose
 
 ![Build Status](https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiOHM1dnF0dkwvUE1WQ2NzMnNwSTZraXQrYXhSR1Q3dTVRRnMzVWVTU1RYR2VVVlArR2s1VVZrUVk2allsdExZaTFiN0tmWTZNWm0zZ21tbWcrWFlCVmRzPSIsIml2UGFyYW1ldGVyU3BlYyI6IkVlR1N4MmdNRzZwdGhST1QiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
 
@@ -6,7 +6,7 @@ This serverless application forwards JSON-formatted log events for a given Cloud
 
 ## App Architecture
 
-![App Architecture](https://github.com/jlhood/kinesis-data-firehose-to-s3/raw/master/images/app-architecture.png)
+![App Architecture](https://github.com/jlhood/json-lambda-logs-to-kinesis-firehose/raw/master/images/app-architecture.png)
 
 1. Lambda function is subscribed to the given CloudWatch log group name.
 1. Any log event that is recognized as JSON are sent to the given Kinesis Delivery Stream.
